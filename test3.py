@@ -137,6 +137,7 @@ if uploaded_zip is not None:
                 if want_svg: selected_formats.append(".svg")
                 if want_pdf: selected_formats.append(".pdf")
                 if want_xml: selected_formats.append(".xml")
+                if want_png: selected_formats.append(".png")
 
                 st.success(f"Done! {len(svg_paths)} files processed → formats: {', '.join(selected_formats)}")
 
