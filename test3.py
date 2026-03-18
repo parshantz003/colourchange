@@ -5,6 +5,7 @@ import re
 import base64
 from pathlib import Path
 from cairosvg import svg2pdf 
+from cairosvg import svg2png
 
 st.set_page_config(page_title="Bulk SVG 2-Color Changer", layout="wide")
 st.title("🎨 Parshant Bulk SVG 2-Color Changer (ZIP Support)")
@@ -75,8 +76,9 @@ if uploaded_zip is not None:
         want_svg = col_a.checkbox("SVG", value=True)
         want_pdf = col_b.checkbox("PDF", value=True)
         want_xml = col_c.checkbox("XML", value=True)
+        want_png = col_c.checkbox("PNG", value=True)
 
-        if not (want_svg or want_pdf or want_xml):
+        if not (want_svg or want_pdf or want_xml or want_png):
             st.warning("Please select at least one output format.")
 
         # ────────────────────────────────────────────────
@@ -84,7 +86,7 @@ if uploaded_zip is not None:
         # ────────────────────────────────────────────────
         if st.button("🔄 Recolor & Generate Selected Formats", type="primary", use_container_width=True):
 
-            if not (want_svg or want_pdf or want_xml):
+            if not (want_svg or want_pdf or want_xml or want_png):
                 st.error("No formats selected. Please choose at least one format above.")
             else:
                 with st.spinner(f"Processing {len(svg_paths)} files..."):
@@ -123,6 +125,11 @@ if uploaded_zip is not None:
                             if want_xml:
                                 xml_path = folder + base_name + ".xml"
                                 out_zip.writestr(xml_path, content.encode('utf-8'))
+                            # 3. PNG
+                            if want_png:
+                                png_bytes = svg2png(bytestring=content.encode('utf-8'))
+                                png_path = folder + base_name + ".png"
+                                out_zip.writestr(png_path, png_bytes)
 
                     output_zip_buffer.seek(0)
 
