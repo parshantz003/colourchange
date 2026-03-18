@@ -76,7 +76,7 @@ if uploaded_zip is not None:
         want_svg = col_a.checkbox("SVG", value=True)
         want_pdf = col_b.checkbox("PDF", value=True)
         want_xml = col_c.checkbox("XML", value=True)
-        want_png = col_c.checkbox("PNG", value=True)
+        want_png = col_a.checkbox("PNG", value=True)
 
         if not (want_svg or want_pdf or want_xml or want_png):
             st.warning("Please select at least one output format.")
